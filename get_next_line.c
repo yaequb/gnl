@@ -28,14 +28,15 @@ char	*ft_read_str(int fd, char *this_str)
 		bts = read(fd, buffer, BUFFER_SIZE);
 		if (bts == -1)
 		{
-			free(this_str);
+			free(buffer);
 			return (NULL);
 		}
 		buffer[bts] = '\0';
+		printf("this_str: (%s)\n", this_str);
+		printf("buffer: (%s)\n",buffer);
 		this_str = ft_strjoin(this_str, buffer);
 	}
 	free(buffer);
-	this_str = ft_strjoin(this_str, buffer);
 	return (this_str);
 }
 
@@ -47,9 +48,11 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	this_str = ft_read_str(fd, this_str);
+	printf("read_str: (%s)\n",this_str);
 	if (!this_str)
 		return (NULL);
 	line = ft_get_line(this_str);
+	printf("get_line: (%s)\n", line);
 	this_str = ft_next_line(this_str);
 	return (line);
 }
@@ -68,15 +71,15 @@ int	main(void)
 	i = 1;
 	while (i < 7)
 	{
-		line = get_next_line(fd1);
-		printf("line [%02d]: %s\n", i, line);
-		free(line);
+		// line = get_next_line(fd1);
+		// printf("line [%02d]: %s\n", i, line);
+		// free(line);
 		line = get_next_line(fd2);
-		printf("line [%02d]: %s\n", i, line);
+		// printf("line [%02d]: %s\n", i, line);
 		free(line);
-		line = get_next_line(fd3);
-		printf("line [%02d]: %s\n", i, line);
-		free(line);
+		// line = get_next_line(fd3);
+		// printf("line [%02d]: %s\n", i, line);
+		// free(line);
 		i++;
 	}
 	close(fd1);
